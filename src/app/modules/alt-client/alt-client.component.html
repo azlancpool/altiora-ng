@@ -1,3 +1,51 @@
-<p>
-  alt-client works!
-</p>
+<br/>
+<nz-modal
+      [(nzVisible)]="isVisible"
+      nzTitle="Nuevo cliente"
+      (nzOnCancel)="handleCancel($event)"
+      (nzOnOk)="handleOk($event)"
+>
+  <p>
+      <nz-input-group [nzPrefix]="prefixTemplate" nzRequired>
+        <input type="text" [(ngModel)]="name" nz-input placeholder="Nombre"/>
+      </nz-input-group>
+      <ng-template #prefixTemplate><i nz-icon nzType="user"></i></ng-template>
+  </p>
+  <p>
+    <nz-input-group [nzPrefix]="prefixTemplate" nzRequired>
+      <input type="text" [(ngModel)]="lastName" nz-input placeholder="Apellido"/>
+    </nz-input-group>
+    <ng-template #prefixTemplate><i nz-icon nzType="user"></i></ng-template>
+  </p>
+</nz-modal>
+
+<button nz-button (click)="nuevo()">Nuevo</button>
+
+<nz-divider></nz-divider>
+<nz-table #filterTable [nzData]="clientList">
+  <thead (nzSortChange)="sort($event)" nzSingleSort>
+    <tr>
+      <th>
+        Nombre
+      </th>
+      <th>
+        Apellido
+      </th>
+      <th>
+        Accion
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let data of filterTable.data">
+      <td>{{ data.name }}</td>
+      <td>{{ data.lastName }}</td>
+      <td>
+        <button nz-button (click)="editar(data)"><i nz-icon type="edit"></i>Editar</button>  
+        <button nz-popconfirm nzTitle="Seguro que desea eliminar este registro?" (nzOnConfirm)="deleteClient(data)" (nzOnCancel)="cancel()"
+          nzPlacement="topLeft" nzType="danger" nz-button><i nz-icon type="minus-circle"></i>Eliminar
+        </button>
+      </td>
+    </tr>
+  </tbody>
+</nz-table>
