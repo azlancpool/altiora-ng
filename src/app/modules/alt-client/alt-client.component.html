@@ -1,19 +1,19 @@
 <br/>
 <nz-modal
       [(nzVisible)]="isVisible"
-      nzTitle="Nuevo cliente"
+      nzTitle="{{modalTitle}}"
       (nzOnCancel)="handleCancel($event)"
       (nzOnOk)="handleOk($event)"
 >
   <p>
       <nz-input-group [nzPrefix]="prefixTemplate" nzRequired>
-        <input type="text" [(ngModel)]="name" nz-input placeholder="Nombre"/>
+        <input type="text" [(ngModel)]="name" nz-input placeholder="Nombre" maxlength="10"/>
       </nz-input-group>
       <ng-template #prefixTemplate><i nz-icon nzType="user"></i></ng-template>
   </p>
   <p>
     <nz-input-group [nzPrefix]="prefixTemplate" nzRequired>
-      <input type="text" [(ngModel)]="lastName" nz-input placeholder="Apellido"/>
+      <input type="text" [(ngModel)]="lastName" nz-input placeholder="Apellido" maxlength="60"/>
     </nz-input-group>
     <ng-template #prefixTemplate><i nz-icon nzType="user"></i></ng-template>
   </p>
@@ -32,7 +32,7 @@
         Apellido
       </th>
       <th>
-        Accion
+        Acción
       </th>
     </tr>
   </thead>
@@ -41,7 +41,8 @@
       <td>{{ data.name }}</td>
       <td>{{ data.lastName }}</td>
       <td>
-        <button nz-button (click)="editar(data)"><i nz-icon type="edit"></i>Editar</button>  
+        <button nz-button nzType="default" (click)="editar(data)"><i nz-icon type="edit"></i>Editar</button>
+        <nz-divider nzType="vertical"></nz-divider>
         <button nz-popconfirm nzTitle="Seguro que desea eliminar este registro?" (nzOnConfirm)="deleteClient(data)" (nzOnCancel)="cancel()"
           nzPlacement="topLeft" nzType="danger" nz-button><i nz-icon type="minus-circle"></i>Eliminar
         </button>

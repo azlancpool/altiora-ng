@@ -10,6 +10,8 @@ import { NzMessageService } from 'ng-zorro-antd';
 })
 export class AltClientComponent implements OnInit {
 
+  modalTitle:String;
+
   clientList: Array<ClientModel> = [];
   name: String="";
   lastName: String="";
@@ -33,12 +35,14 @@ export class AltClientComponent implements OnInit {
   }
 
   nuevo(): void {
+    this.modalTitle = 'Nuevo Cliente';
     this.name="";
     this.lastName="";
     this.isVisible = true;
   }
 
   editar(clientModel: ClientModel): void {
+    this.modalTitle = 'Editar Cliente';
     this.currentClient = clientModel;
     this.name = clientModel.name;
     this.lastName = clientModel.lastName;
@@ -61,7 +65,7 @@ export class AltClientComponent implements OnInit {
         let newClient = new ClientModel();
         newClient.name = this.name;
         newClient.lastName = this.lastName;
-        this.clientService.saveClient(newClient).subscribe((clientSaved: ClientModel)=>{
+        this.clientService.saveClient(newClient).subscribe(()=>{
           this.loadClientList();
           this.message.create('success', `Cliente nuevo guardado`);
         })
@@ -74,7 +78,6 @@ export class AltClientComponent implements OnInit {
           this.message.create('success', `Cliente editado`);
         });
       }
-      console.log('nothing to do');
       this.currentClient =null;
       this.isVisible = false;
     }
