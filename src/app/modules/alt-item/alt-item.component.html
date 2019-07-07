@@ -1,3 +1,62 @@
-<p>
-  alt-item works!
-</p>
+<br/>
+<nz-modal
+      [(nzVisible)]="isVisible"
+      nzTitle="{{modalTitle}}"
+      (nzOnCancel)="handleCancel($event)"
+      (nzOnOk)="handleOk($event)"
+>
+  <p>
+    <nz-input-group [nzPrefix]="prefixTemplate" *ngIf="editFlag">
+        <input type="text" [(ngModel)]="idItem" nz-input placeholder="Clave del artículo" maxlength="10" [disabled]="true"/>
+    </nz-input-group>
+    <nz-input-group [nzPrefix]="prefixTemplate" *ngIf="!editFlag">
+      <input type="text" [(ngModel)]="idItem" nz-input placeholder="Clave del artículo" maxlength="10" nz-tooltip [nzTitle]="title" (blur)="onBlur()"/>
+    </nz-input-group>
+    <ng-template #prefixTemplate><i nz-icon nzType="form"></i></ng-template>
+  </p>
+  <p>
+    <nz-input-group [nzPrefix]="prefixTemplate">
+      <input type="text" [(ngModel)]="name" nz-input placeholder="Nombre del Artículo" maxlength="50"/>
+    </nz-input-group>
+    <ng-template #prefixTemplate><i nz-icon nzType="form"></i></ng-template>
+  </p>
+  <p>
+    <nz-input-number [nzMin]="0.0" [nzStep]="0.1" [nzFormatter]="formatterDollar" [nzParser]="parserDollar" [(ngModel)]="unitPrice"></nz-input-number>
+  </p>
+</nz-modal>
+
+<button nz-button (click)="nuevo()">Nuevo</button>
+
+<nz-divider></nz-divider>
+<nz-table #filterTable [nzData]="itemList">
+  <thead (nzSortChange)="sort($event)" nzSingleSort>
+    <tr>
+      <th>
+        Clave del Artículo
+      </th>
+      <th>
+        Nombre
+      </th>
+      <th>
+        Precio Unitario
+      </th>
+      <th>
+        Acción
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let data of filterTable.data">
+      <td>{{ data.idItem }}</td>
+      <td>{{ data.name }}</td>
+      <td>{{ data.unitPrice }}</td>
+      <td>
+        <button nz-button nzType="default" (click)="editar(data)"><i nz-icon type="edit"></i>Editar</button>
+        <nz-divider nzType="vertical"></nz-divider>
+        <button nz-popconfirm nzTitle="Seguro que desea eliminar este registro?" (nzOnConfirm)="deleteItem(data)" (nzOnCancel)="cancel()"
+          nzPlacement="topLeft" nzType="danger" nz-button><i nz-icon type="minus-circle"></i>Eliminar
+        </button>
+      </td>
+    </tr>
+  </tbody>
+</nz-table>
