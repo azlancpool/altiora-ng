@@ -1,0 +1,75 @@
+<br/>
+<nz-modal
+      [(nzVisible)]="isVisible"
+      nzTitle="{{modalTitle}}"
+      (nzOnCancel)="handleCancel($event)"
+      (nzOnOk)="handleOk($event)"
+>
+<br/>
+<br/>
+<p>
+<nz-table #filterTable [nzData]="orderItemList" *ngIf="showTable">
+  <thead (nzSortChange)="sort($event)" nzSingleSort>
+    <tr>
+      <th>
+        Número
+      </th>
+      <th>
+        Código de artículo
+      </th>
+      <th>
+        Nombre
+      </th>
+      <th>
+        Cantidad
+      </th>
+      <th>
+        Precio
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let data of filterTable.data">
+      <td>{{ data.idOrderItem }}</td>
+      <td>{{ data.itemDTO.idItem }}</td>
+      <td>{{ data.itemDTO.name }}</td>
+      <td>{{ data.quantity }}</td>
+      <td>{{ data.price }}</td>
+    </tr>
+  </tbody>
+</nz-table>
+</p>
+</nz-modal>
+
+<button nz-button (click)="nuevo()" [disabled]="true">Nuevo</button>
+
+<nz-divider></nz-divider>
+<nz-table #filterTable [nzData]="orderList">
+  <thead (nzSortChange)="sort($event)" nzSingleSort>
+    <tr>
+      <th>
+        Número de orden
+      </th>
+      <th>
+        Cliente
+      </th>
+      <th>
+        Fecha
+      </th>
+      <th>
+        Acción
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let data of filterTable.data">
+      <td>{{ data.idOrder }}</td>
+      <td>{{ data.clientDTO.name }} {{ data.clientDTO.lastName }}</td>
+      <td>{{ data.date }}</td>
+      <td>
+        <button nz-button nzType="default" (click)="listarArticulos(data)"><i nz-icon type="edit"></i>Listar Artículos</button>
+        <nz-divider nzType="vertical"></nz-divider>
+      </td>
+    </tr>
+  </tbody>
+</nz-table>
