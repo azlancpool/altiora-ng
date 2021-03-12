@@ -13,3 +13,5 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 - Cargar el plugin visual mediante el comando: **ng add ng-zorro-antd**
 - Abrir una consola de comandos desde el terminal de **VisualStudio Code** y ejecutar el comando: **npm start**.
 - Posterior a la compilación del proyecto se podrá acceder al mismo mediante la url: **http://localhost:4200**.
+
+s
